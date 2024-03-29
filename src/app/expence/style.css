@@ -1,0 +1,21 @@
+.textfields{
+    display: flex;
+
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+}
+
+.cards-1{
+    display: flex;
+    
+}
+
+
+.sum-card{
+    border: solid;
+    width: fit-content;
+}

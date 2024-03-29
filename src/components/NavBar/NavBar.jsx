@@ -1,17 +1,45 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import React from "react";
 
 export const NavBar = () => {
-  const paragraphStyles = {
+  const router = useRouter();
+  const path = usePathname();
+
+  const paragraphStylesWhenNotSelected = {
     margin: 0,
     color: "#fff",
     fontSize: "18px",
-    cursor:"pointer"
+    cursor: "pointer",
   };
 
-  const router = useRouter();
+  const paragraphStylesWhentSelected = {
+    margin: 0,
+    color: "#000",
+    fontSize: "18px",
+    cursor: "pointer",
+  };
+
+  const selectedDiv = {
+    width: "100px",
+    height: "50px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const unSelectedDiv = {
+    width: "100px",
+    height: "50px",
+    backgroundColor: "",
+    borderRadius: "5px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
 
   return (
     <div
@@ -28,18 +56,45 @@ export const NavBar = () => {
       <div
         style={{
           display: "flex",
-          gap: 60,
+          gap: 80,
         }}
       >
-        <p style={paragraphStyles} onClick={() => router.push("/home")}>
-          Home
-        </p>
-        <p style={paragraphStyles} onClick={() => router.push("/expence")}>
-          Expences
-        </p>
-        <p style={paragraphStyles} onClick={() => router.push("/settings")}>
-          Setting
-        </p>
+        <div style={path === "/home" ? selectedDiv : unSelectedDiv}>
+          <p
+            style={
+              path === "/home"
+                ? paragraphStylesWhentSelected
+                : paragraphStylesWhenNotSelected
+            }
+            onClick={() => router.push("/home")}
+          >
+            Home
+          </p>
+        </div>
+        <div style={path === "/expence" ? selectedDiv : unSelectedDiv}>
+          <p
+            style={
+              path === "/expence"
+                ? paragraphStylesWhentSelected
+                : paragraphStylesWhenNotSelected
+            }
+            onClick={() => router.push("/expence")}
+          >
+            Expences
+          </p>
+        </div>
+        <div style={path === "/settings" ? selectedDiv : unSelectedDiv}>
+          <p
+            style={
+              path === "/settings"
+                ? paragraphStylesWhentSelected
+                : paragraphStylesWhenNotSelected
+            }
+            onClick={() => router.push("/settings")}
+          >
+            Setting
+          </p>
+        </div>
       </div>
     </div>
   );

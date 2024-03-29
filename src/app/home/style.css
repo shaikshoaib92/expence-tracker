@@ -1,0 +1,13 @@
+.child1{
+        width:60%;
+        display: flex;
+        flex-wrap: wrap;
+}
+
+
+
+.parent{
+    display: flex;
+    flex-direction: row;
+
+}
