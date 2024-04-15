@@ -1,27 +1,24 @@
-import React from 'react'
+import React from "react";
+import "../style.css";
 
-const Cards1 = () => {
+const Cards1 = ({ item }) => {
   return (
     <div>
-       
-       <div>
-        <h2>Top 5 food Expenses</h2>
+      <div className="header-1">
+        <p className="heading">{`Top 5 ${item?.categorie} Expenses`}</p>
         <ol>
-          <li>Coffeeee - rs 50/-</li>
-          <li>Teaaaaa rs 50/-</li>
-          <li>fries rs 90/-</li>
-          <li>biryani rs 150/-</li>
-          <li>cool drinks rs 40/-</li>
+          {item?.expenses.map((expence) => {
+            return (
+              <li className="lists">
+                {expence?.item}
+                {expence?.price}
+              </li>
+            );
+          })}
         </ol>
       </div>
+    </div>
+  );
+};
 
-      
-      </div>
-
-
-
-   
-  )
-}
-
-export default Cards1
+export default Cards1;

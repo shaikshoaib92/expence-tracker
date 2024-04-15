@@ -1,126 +1,114 @@
+"use client";
+import { useState, useEffect } from "react";
 import React from "react";
-import "./style.css";
+import { addExpense, getAllCategories } from "./services/api";
 import CategoriesCard from "./components/CategoriesCard";
 import SumCard from "./components/SumCard";
 import Dropdown from "./components/Dropdown";
+import axios from "axios";
+
+import "./style.css";
 
 const ExpencePage = () => {
-  //This data will get after an api call usually.
+  const [expense, setExpence] = useState();
+  const [amount, setAmount] = useState();
+  const [category, setCategory] = useState();
+  const [newExpense, setNewExpense] = useState(null);
+  const [data, setData] = useState();
+  const [run,setRun] = useState(false)
 
-  const data = [
-    {
-      categorie: "Grocery",
-      expenses: [
-        {
-          item: "kaju",
-          price: 500,
-        },
-        {
-          item: "badam",
-          price: 500,
-        },
-        {
-          item: "Sugar",
-          price: 500,
-        },
-        {
-          item: "Rice",
-          price: 500,
-        },
-        {
-          item: "Daal",
-          price: 500,
-        },
-        {
-          item: "fruits",
-          price: 500,
-        },
-      ],
-    },
-    {
-      categorie: "food",
-      expenses: [
-        {
-          item: "mandi",
-          price: 500,
-        },
-        {
-          item: "Biyani",
-          price: 500,
-        },
-        {
-          item: "Tabuz",
-          price: 500,
-        },
-        {
-          item: "Bhajiye",
-          price: 500,
-        },
-        {
-          item: "Madem ki maar, usek baad uno diye so goliya food samjke",
-          price: 500,
-        },
-        {
-          item: "mandi",
-          price: 500,
-        },
-      ],
-    },
-    {
-      categorie: "Shopping",
-      expenses: [
-        {
-          item: "Watch",
-          price: 500,
-        },
-        {
-          item: "purce",
-          price: 500,
-        },
-        {
-          item: "Shoes",
-          price: 500,
-        },
-        {
-          item: "Gulab ka phool",
-          price: 500,
-        },
-        {
-          item: "Madem ki maar se bachne unku dress",
-          price: 500,
-        },
-        {
-          item: "belt",
-          price: 500,
-        },
-      ],
-    },
-    
-  ];
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllCategories();
+        setData(response?.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchData();
+  }, [run]);
+
+  // const data = response?.data;
+
+  const handleExpenseChange = (event) => {
+    setExpence(event.target.value);
+  };
+
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const handleAddExpense = async () => {
+    if (expense && amount && category) {
+      const newExpenseItem = {
+        expense: expense,
+        categorie: category,
+        amount: amount,
+      };
+      try {
+        const response = await addExpense(newExpenseItem).then(() => {
+          setExpence("");
+          setAmount("");
+          setCategory("");
+          setRun(!run)
+        });
+        response.newExpenseItem;
+      } catch (error) {
+        console.error("Error adding expense:", error);
+      }
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    const selectedCategory = event.target.value;
+    setCategory(selectedCategory);
+  };
 
   return (
-    <div className="parent-div">
+    <div>
       <div className="container-1">
         <div className="textfields">
           <div>
-            <input type="text" />
+            <input
+              className="input1"
+              type="text"
+              placeholder="Expense"
+              value={expense}
+              onChange={handleExpenseChange}
+            />
           </div>
           <div>
-            <input type="text" />
+            <input
+              className="input2"
+              type="text"
+              placeholder="Amount"
+              value={amount}
+              onChange={handleAmountChange}
+            />
           </div>
-          <Dropdown />
-          <div>
-            <input type="text" value="total amount spend" />
-          </div>
-          <SumCard />
+
+          <Dropdown setter={handleCategoryChange} category={category} />
+          {/* <SumCard/> */}
         </div>
-        <div>
-          <button>Send</button>
+        <div className="butn">
+          <button className="button-send" onClick={handleAddExpense}>
+            Send
+          </button>
         </div>
       </div>
-      <div className="cards">
-        {data.map((item) => {
-          return <CategoriesCard item={item} />;
+      <div className="cate-header">
+        {data?.map((item) => {
+          return (
+            <CategoriesCard
+              key={item?.categorie}
+              item={item}
+              newExpense={newExpense}
+            />
+          );
         })}
       </div>
     </div>

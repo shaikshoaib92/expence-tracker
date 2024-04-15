@@ -2,16 +2,16 @@ import React from 'react'
 import "../style.css";
  
 
-const Dropdown = () => {
+const Dropdown = ({setter, category}) => {
   return (
     <div>
-      <select>
+      <select  className='dropdown' onChange={setter} value={category}>
             <option>Select</option>
-            <option>Food expenses</option>
-            <option>groceries expenses</option>
-            <option>shoping expences</option>
-            <option>fiexed expenses</option>
-            <option>Miscelinious Expenses</option>
+            <option >Food</option>
+            <option >Groceries</option>
+            <option >Shopping</option>
+            <option >Fixed</option>
+            <option >Miscellaneous</option>
           </select>
     </div>
   )

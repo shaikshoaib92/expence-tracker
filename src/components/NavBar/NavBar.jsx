@@ -59,7 +59,7 @@ export const NavBar = () => {
           gap: 80,
         }}
       >
-        <div style={path === "/home" ? selectedDiv : unSelectedDiv}>
+        {/* <div style={path === "/home" ? selectedDiv : unSelectedDiv}>
           <p
             style={
               path === "/home"
@@ -70,7 +70,7 @@ export const NavBar = () => {
           >
             Home
           </p>
-        </div>
+        </div> */}
         <div style={path === "/expence" ? selectedDiv : unSelectedDiv}>
           <p
             style={

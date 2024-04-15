@@ -1,22 +1,20 @@
 import React from 'react'
 
-const Cards1 = () => {
+const Cards2 = ({item}) => {
   return (
     <div>
        
-       <div>
-        <h2>Top 10 food Expenses</h2>
+       <div className="header-2">
+        <p className='heading'>{`Top 10 ${item?.categorie} Expenses`}</p>
         <ol>
-          <li>Coffeeee - rs 50/-</li>
-          <li>Teaaaaa rs 50/-</li>
-          <li>fries rs 90/-</li>
-          <li>biryani rs 150/-</li>
-          <li>cool drinks rs 40/-</li>
-          <li>Coffeeee - rs 50/-</li>
-          <li>Teaaaaa rs 50/-</li>
-          <li>fries rs 90/-</li>
-          <li>biryani rs 150/-</li>
-          <li>cool drinks rs 40/-</li>
+          {item?.expenses.map((expence) => {
+            return (
+              <li className='lists'>
+                {expence?.item}
+                {expence?.price}
+              </li>
+            );
+          })}
         </ol>
       </div>
 
@@ -29,4 +27,4 @@ const Cards1 = () => {
   )
 }
 
-export default Cards1
+export default Cards2
